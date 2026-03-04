@@ -1,0 +1,18 @@
+services:
+  budget-free-api-db:
+    container_name: budget-free-api-container
+    image: postgres:14.2
+    restart: always
+    environment: 
+      POSTGRES_DB: "budget_free_db"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - vol-books-api-db:/var/lib/postgresql/data
+
+volumes:
+  vol-books-api-db:
