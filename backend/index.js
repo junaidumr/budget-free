@@ -58,7 +58,7 @@ app.post('/api/register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await db.query(
-            'INSERT INTO users (email, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id, email, first_name, last_name, phone, avatar_url',
+            'INSERT INTO users (email, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING id, email, first_name, last_name, phone, avatar_url, cover_url',
             [email, hashedPassword, first_name, last_name || '']
         );
         const user = result.rows[0];
@@ -129,7 +129,7 @@ app.put('/api/profile', authenticateToken, async (req, res) => {
         }
 
         const result = await db.query(
-            'UPDATE users SET first_name = $1, last_name = $2, phone = $3, email = $4, updated_at = NOW() WHERE id = $5 RETURNING id, email, first_name, last_name, phone, avatar_url',
+            'UPDATE users SET first_name = $1, last_name = $2, phone = $3, email = $4, updated_at = NOW() WHERE id = $5 RETURNING id, email, first_name, last_name, phone, avatar_url, cover_url',
             [first_name, last_name || '', phone || '', email || req.user.email, userId]
         );
 
